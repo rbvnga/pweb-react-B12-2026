@@ -1,0 +1,300 @@
+
+:root {
+  /* Warna utama */
+  --ink: #0f172a;            /* teks utama */
+  --ink-soft: #475569;       /* teks sekunder */
+  --accent: #0f766e;         /* teal: tombol & elemen aktif */
+  --accent-hover: #115e59;
+  --accent-bright: #14b8a6;
+  --accent-tint: #ccfbf1;    /* latar lembut untuk chip/pill */
+  --accent-ink: #134e4a;     /* teal gelap untuk teks di atas tint */
+
+  /* Panel kaca */
+  --panel-bg: rgba(255, 255, 255, 0.82);
+  --panel-solid: rgba(255, 255, 255, 0.94);
+  --panel-border: rgba(255, 255, 255, 0.7);
+  --panel-shadow: 0 8px 28px rgba(15, 23, 42, 0.1);
+  --panel-blur: blur(12px);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+
+  --font-ui: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background-color: #dfe7ee;
+  font-family: var(--font-ui);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.app-shell {
+  color: var(--ink);
+  background-color: #dfe7ee;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(236, 242, 247, 0.78) 0%,
+      rgba(236, 242, 247, 0.38) 40%,
+      rgba(226, 234, 241, 0.7) 100%
+    ),
+    url("./assets/bg-city.jpg");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ---------------------------------------------------------------------------
+   NAVBAR: kaca putih (bukan biru navy) dengan tab bergaya "underline"
+   ------------------------------------------------------------------------ */
+.app-shell .top-navbar {
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  color: var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.app-shell .brand-badge {
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(15, 118, 110, 0.35);
+}
+
+.app-shell .brand-title {
+  color: var(--ink);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.app-shell .nav-tab-btn {
+  color: var(--ink-soft);
+  border-radius: 0;
+  padding: 10px 14px;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+}
+
+.app-shell .nav-tab-btn:hover {
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.app-shell .nav-tab-btn.active {
+  background-color: transparent;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   TOMBOL UTAMA: gradient teal
+   ------------------------------------------------------------------------ */
+.app-shell .btn-open-manual,
+.app-shell .btn-wishlist,
+.app-shell .btn-submit-form {
+  background: linear-gradient(135deg, var(--accent), #0d9488);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(15, 118, 110, 0.25);
+  transition: transform 0.12s, box-shadow 0.12s, filter 0.12s;
+}
+
+.app-shell .btn-open-manual:hover,
+.app-shell .btn-wishlist:hover:not(:disabled),
+.app-shell .btn-submit-form:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(15, 118, 110, 0.3);
+}
+
+/* Tombol "Sudah Dilamar" tetap abu-abu (jangan ikut gradient) */
+.app-shell .btn-wishlist.btn-applied,
+.app-shell .btn-wishlist:disabled {
+  background: #eef2f6;
+  color: #64748b;
+  box-shadow: none;
+  transform: none;
+}
+
+.app-shell .btn-add-skill {
+  background-color: var(--accent-ink);
+  border-radius: 10px;
+}
+
+.app-shell .btn-add-skill:hover {
+  background-color: var(--accent);
+}
+
+.app-shell .btn-refresh-link {
+  color: var(--accent);
+  background: var(--accent-tint);
+  border-color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   PANEL & KARTU: kaca, sudut lebih bulat, bayangan lembut
+   ------------------------------------------------------------------------ */
+.app-shell .skill-sidebar-card,
+.app-shell .catalog-panel,
+.app-shell .pipeline-placeholder-section,
+.app-shell .pipeline-toolbar,
+.app-shell .manual-form-card,
+.app-shell .pipeline-section > .section-header-bar {
+  background-color: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: var(--panel-blur);
+}
+
+/* Kartu di dalam panel: lebih pekat supaya isi mudah dibaca */
+.app-shell .job-card,
+.app-shell .saved-app-card,
+.app-shell .pipeline-card {
+  background-color: var(--panel-solid);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.app-shell .job-card:hover,
+.app-shell .pipeline-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(15, 118, 110, 0.35);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
+.app-shell .section-header-bar h2,
+.app-shell .sidebar-title {
+  letter-spacing: -0.01em;
+  font-weight: 800;
+}
+
+.app-shell .state-box {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(15, 23, 42, 0.18);
+  border-radius: var(--radius-md);
+}
+
+.app-shell .error-box {
+  background-color: rgba(254, 242, 242, 0.92);
+  border-color: #fca5a5;
+}
+
+/* ---------------------------------------------------------------------------
+   ELEMEN KECIL: avatar, chip, pill, input, spinner
+   ------------------------------------------------------------------------ */
+.app-shell .company-avatar {
+  background: linear-gradient(135deg, var(--accent-ink), var(--accent));
+  border-radius: 10px;
+}
+
+.app-shell .kapten-skill-chip {
+  background-color: var(--accent-tint);
+  border-color: transparent;
+  color: var(--accent-ink);
+  border-radius: 999px;
+  padding: 4px 11px;
+}
+
+.app-shell .status-pill {
+  background-color: var(--accent-tint);
+  color: var(--accent-ink);
+  border-radius: 999px;
+}
+
+.app-shell .conditional-box-label {
+  color: var(--accent);
+}
+
+.app-shell .skill-input:focus,
+.app-shell .catalog-search-input:focus,
+.app-shell .catalog-select:focus,
+.app-shell .form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+}
+
+.app-shell .radio-option input {
+  accent-color: var(--accent);
+}
+
+.app-shell .spinner {
+  border-top-color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   KOMPONEN PIPELINE & DETAIL
+   ------------------------------------------------------------------------ */
+.app-shell .progress-fill {
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+}
+
+.app-shell .stage-item.done {
+  border-top-color: var(--accent);
+}
+
+.app-shell .stage-item.active {
+  border-top-color: var(--accent);
+  color: var(--accent);
+}
+
+.app-shell .transition-btn:hover {
+  border-color: var(--accent);
+}
+
+.app-shell .transition-btn.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+/* Peringatan: amber untuk ghosting, merah lembut untuk bentrok */
+.app-shell .ghost-badge {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fcd34d;
+}
+
+.app-shell .conflict-banner {
+  background-color: rgba(254, 242, 242, 0.95);
+  border-left: 4px solid #dc2626;
+  border-radius: var(--radius-md);
+  box-shadow: var(--panel-shadow);
+}
+
+.app-shell .detail-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 20px;
+}
+
+
+.app-shell .modal-backdrop {
+  background-color: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* Layar kecil: background fixed sering patah di mobile */
+@media (max-width: 768px) {
+  .app-shell {
+    background-attachment: scroll;
+  }
+}
+
+/* Header "War Room Pipeline": beri ruang napas di dalam kotak kaca */
+.app-shell .pipeline-section > .section-header-bar {
+  padding: 16px 22px;
+  margin-bottom: 0;
+}

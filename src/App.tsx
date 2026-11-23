@@ -1,14 +1,16 @@
 import { useState } from "react";
 import "./App.css";
+import "./theme.css";
 import type { Application, JobListing } from "./types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import {
   inferWorkModeFromLocation,
   isDuplicateApplication,
 } from "./utils/applicationHelpers";
-import { calculateSkillMatch, getMatchBadgeTier } from "./utils/skillMatch";
 import JobExploration from "./components/JobExploration";
 import ManualApplicationForm from "./components/ManualApplicationForm";
+import PipelineView from "./components/PipelineView";
+import ApplicationDetail from "./components/ApplicationDetail";
 
 const DEFAULT_KAPTEN_SKILLS: string[] = [
   "React",
@@ -33,6 +35,12 @@ export default function App() {
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("explore");
   const [isManualFormOpen, setIsManualFormOpen] = useState<boolean>(false);
+  // Simpan HANYA id lamaran yang dibuka, bukan objeknya. Objeknya dicari
+  // ulang dari `applications` (derived) supaya detail selalu menampilkan
+  // data terbaru setelah status/checklist berubah.
+  const [selectedApplicationId, setSelectedApplicationId] = useState<
+    string | null
+  >(null);
 
   const handleAddSkill = (rawSkill: string): boolean => {
     const clean = rawSkill.trim();
@@ -85,6 +93,20 @@ export default function App() {
   const handleAddManualApplication = (newApp: Application) => {
     setApplications((prev) => [newApp, ...prev]);
   };
+
+  // Ubah SATU lamaran secara immutable: map() membuat array baru, hanya item
+  // dengan id yang cocok diganti hasil updater (objek baru), sisanya dipakai ulang.
+  const handleUpdateApplication = (
+    id: string,
+    updater: (app: Application) => Application
+  ) => {
+    setApplications((prev) =>
+      prev.map((app) => (app.id === id ? updater(app) : app))
+    );
+  };
+
+  const selectedApplication =
+    applications.find((a) => a.id === selectedApplicationId) ?? null;
 
   const offerCount = applications.filter((a) => a.status === "OFFER").length;
 
@@ -151,80 +173,12 @@ export default function App() {
         )}
 
         {activeTab === "pipeline" && (
-          <section className="pipeline-placeholder-section">
-            <div className="section-header-bar">
-              <div>
-                <h2>Daftar Lamaran Tersimpan ({applications.length})</h2>
-                <p className="section-sub">
-                  Bagian War Room Pipeline (Fitur 3–6) akan diintegrasikan oleh
-                  anggota kelompok berikutnya.
-                </p>
-              </div>
-              <button
-                type="button"
-                className="btn-submit-form"
-                onClick={() => setIsManualFormOpen(true)}
-              >
-                + Tambah Lamaran Manual
-              </button>
-            </div>
-
-            {applications.length === 0 ? (
-              <div className="state-box empty-box">
-                <p className="state-title">Belum Ada Lamaran Tersimpan</p>
-                <p className="state-desc">
-                  Simpan lowongan dari katalog Eksplorasi atau klik tombol{" "}
-                  <strong>+ Catat Lamaran</strong> di kanan atas.
-                </p>
-              </div>
-            ) : (
-              <div className="saved-apps-grid">
-                {applications.map((app) => {
-                  const match = calculateSkillMatch(
-                    kaptenSkills,
-                    app.requiredSkills
-                  );
-                  const tier = getMatchBadgeTier(match.score);
-
-                  return (
-                    <article key={app.id} className="saved-app-card">
-                      <div className="saved-app-top">
-                        <div>
-                          <h3 className="saved-app-role">{app.role}</h3>
-                          <p className="saved-app-company">
-                            {app.company} • {app.workMode}
-                          </p>
-                        </div>
-                        <span className={`match-badge match-${tier}`}>
-                          ● {match.score}% Match
-                        </span>
-                      </div>
-
-                      <div className="saved-app-meta">
-                        <span className="status-pill">{app.status}</span>
-                        {app.cvVersion && (
-                          <span className="meta-text">CV: {app.cvVersion}</span>
-                        )}
-                        {app.appliedDate && (
-                          <span className="meta-text">
-                            Tgl Lamar: {app.appliedDate}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="job-tags-list">
-                        {app.requiredSkills.map((skill) => (
-                          <span key={skill} className="job-skill-tag matched">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            )}
-          </section>
+          <PipelineView
+            applications={applications}
+            kaptenSkills={kaptenSkills}
+            onUpdateApplication={handleUpdateApplication}
+            onOpenDetail={setSelectedApplicationId}
+          />
         )}
 
         {activeTab === "comparator" && (
@@ -239,6 +193,25 @@ export default function App() {
           </section>
         )}
       </main>
+
+      {selectedApplication && (
+        <div
+          className="modal-backdrop"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelectedApplicationId(null);
+          }}
+        >
+          <div className="modal-content modal-wide">
+            {/* key = id: pindah ke lamaran lain akan me-reset state form */}
+            <ApplicationDetail
+              key={selectedApplication.id}
+              application={selectedApplication}
+              onUpdateApplication={handleUpdateApplication}
+              onClose={() => setSelectedApplicationId(null)}
+            />
+          </div>
+        </div>
+      )}
 
       {isManualFormOpen && (
         <div

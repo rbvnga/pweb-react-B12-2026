@@ -1,0 +1,267 @@
+/* Style khusus ApplicationDetail (Fitur 4) */
+
+/* Modal detail lebih lebar dari modal form */
+.modal-content.modal-wide {
+  max-width: 980px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.detail-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 14px;
+}
+
+.detail-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.detail-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.detail-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-body {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.detail-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.detail-section {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.detail-section-title {
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+/* ---- Tahap seleksi ---- */
+.stage-track {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.stage-item {
+  font-size: 10.5px;
+  text-align: center;
+  padding-top: 8px;
+  border-top: 3px solid #e2e8f0;
+  color: #94a3b8;
+}
+
+.stage-item.done {
+  border-top-color: #2563eb;
+  color: #475569;
+}
+
+.stage-item.active {
+  border-top-color: #2563eb;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+/* ---- Form transisi ---- */
+.transition-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transition-label {
+  margin: 0;
+  font-size: 13px;
+  color: #475569;
+}
+
+.transition-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.transition-btn {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #334155;
+}
+
+.transition-btn:hover {
+  border-color: #2563eb;
+}
+
+.transition-btn.selected {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.conditional-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.btn-submit-form:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.detail-final-note {
+  margin: 0;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #475569;
+}
+
+/* ---- Checklist ---- */
+.checklist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.checklist-list,
+.log-list {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.check-label.done span {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.btn-icon-remove {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.btn-icon-remove:hover {
+  color: #dc2626;
+}
+
+.inline-add-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.inline-add-row .form-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-empty {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* ---- Activity log ---- */
+.log-list {
+  max-height: 340px;
+  overflow-y: auto;
+  border-left: 2px solid #e2e8f0;
+  padding-left: 12px;
+  gap: 10px;
+}
+
+.log-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.log-time {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.log-message {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+@media (max-width: 800px) {
+  .detail-body {
+    grid-template-columns: 1fr;
+  }
+}
