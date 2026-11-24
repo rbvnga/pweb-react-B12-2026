@@ -86,9 +86,6 @@ export default function DashboardView({
         <div className="comparator-top">
           <div>
             <h2 className="dashboard-title">Bandingkan Offer Magang</h2>
-            <p className="dashboard-sub">
-              Bobot: Uang Saku 50% • Mode Kerja 25% • Kecocokan Skill 25%
-            </p>
           </div>
 
           {/* untuk dropdown pilih Offer A dan Offer B */}
