@@ -63,6 +63,18 @@ export interface InterviewConflict {
   diffMinutes: number;
 }
 
+// untuk angka di 5 kartu statistik Dashboard (Fitur 7)
+export interface DashboardStats {
+  totalApplications: number;
+  sentCount: number;
+  respondedCount: number;
+  interviewCount: number;
+  responseRate: number;
+  interviewRate: number;
+  ghostingCount: number;
+  offerCount: number;
+}
+
 export interface OfferScoreBreakdown {
   salaryScore: number;
   workModeScore: number;

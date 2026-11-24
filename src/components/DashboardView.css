@@ -1,0 +1,183 @@
+/* untuk jarak antar kotak */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* untuk kotak putih (sama seperti panel lain) */
+.dashboard-box {
+  background-color: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: var(--panel-blur);
+  padding: 20px;
+}
+
+.dashboard-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.dashboard-sub {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* untuk 5 kartu statistik */
+.stats-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.stat-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.stat-value {
+  margin: 4px 0 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.stat-note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* untuk judul dan dropdown offer */
+.comparator-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.comparator-selects {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.comparator-selects .catalog-select {
+  width: auto;
+}
+
+.tie-note {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #b45309;
+}
+
+/* untuk 2 kartu offer berdampingan */
+.comparator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.offer-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+/* untuk menandai offer terbaik */
+.offer-card.best {
+  border-color: var(--accent);
+}
+
+.offer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.offer-company {
+  margin: 0;
+  font-size: 16px;
+}
+
+.offer-role {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.best-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background-color: var(--accent-tint);
+  color: var(--accent-ink);
+  white-space: nowrap;
+}
+
+/* untuk tabel rincian skor */
+.offer-table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.offer-table td {
+  padding: 9px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.offer-table td:first-child {
+  color: #64748b;
+}
+
+.offer-score {
+  text-align: right;
+  font-weight: 600;
+}
+
+/* untuk total skor */
+.offer-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.offer-total-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* untuk layar kecil */
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .comparator-grid {
+    grid-template-columns: 1fr;
+  }
+}

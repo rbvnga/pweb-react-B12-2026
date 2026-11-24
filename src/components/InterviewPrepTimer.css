@@ -1,0 +1,58 @@
+/* untuk judul dan nomor soal */
+.prep-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.prep-header .detail-section-title {
+  margin: 0;
+}
+
+.prep-counter {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* untuk teks pertanyaan */
+.prep-question {
+  margin: 10px 0 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* untuk baris timer dan tombol */
+.prep-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.prep-timer {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.prep-timer.time-up {
+  color: #dc2626;
+}
+
+.prep-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.prep-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* untuk tulisan waktu habis */
+.prep-time-up {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #dc2626;
+}

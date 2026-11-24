@@ -11,6 +11,8 @@ import JobExploration from "./components/JobExploration";
 import ManualApplicationForm from "./components/ManualApplicationForm";
 import PipelineView from "./components/PipelineView";
 import ApplicationDetail from "./components/ApplicationDetail";
+import InterviewPrepTimer from "./components/InterviewPrepTimer";
+import DashboardView from "./components/DashboardView";
 
 const DEFAULT_KAPTEN_SKILLS: string[] = [
   "React",
@@ -147,7 +149,7 @@ export default function App() {
               }
               onClick={() => setActiveTab("comparator")}
             >
-              Bandingkan Offer ({offerCount})
+              Dashboard & Offer ({offerCount})
             </button>
           </nav>
 
@@ -182,15 +184,10 @@ export default function App() {
         )}
 
         {activeTab === "comparator" && (
-          <section className="pipeline-placeholder-section">
-            <div className="state-box empty-box">
-              <p className="state-title">Offer Comparator (Fitur 7)</p>
-              <p className="state-desc">
-                Bagian perbandingan Offer akan diintegrasikan oleh anggota
-                kelompok yang mengerjakan Fitur 7.
-              </p>
-            </div>
-          </section>
+          <DashboardView
+            applications={applications}
+            kaptenSkills={kaptenSkills}
+          />
         )}
       </main>
 
@@ -208,6 +205,8 @@ export default function App() {
               application={selectedApplication}
               onUpdateApplication={handleUpdateApplication}
               onClose={() => setSelectedApplicationId(null)}
+              // untuk menampilkan Latihan Interview (Fitur 5)
+              prepSlot={<InterviewPrepTimer />}
             />
           </div>
         </div>
