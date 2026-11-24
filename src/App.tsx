@@ -13,6 +13,8 @@ import PipelineView from "./components/PipelineView";
 import ApplicationDetail from "./components/ApplicationDetail";
 import InterviewPrepTimer from "./components/InterviewPrepTimer";
 import DashboardView from "./components/DashboardView";
+import { useUndoDelete } from "./hooks/useUndoDelete";
+import UndoToast from "./components/UndoToast";
 
 const DEFAULT_KAPTEN_SKILLS: string[] = [
   "React",
@@ -34,6 +36,13 @@ export default function App() {
     "aku_mw_magang_applications",
     []
   );
+
+ // Fitur 6: hapus lamaran dengan jendela Undo 5 detik (logika di hook).
+  const {
+    pending: pendingDelete,
+    deleteItem: handleDeleteApplication,
+    undo: handleUndoDelete,
+  } = useUndoDelete<Application>(applications, setApplications, 5000);
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("explore");
   const [isManualFormOpen, setIsManualFormOpen] = useState<boolean>(false);
@@ -180,6 +189,7 @@ export default function App() {
             kaptenSkills={kaptenSkills}
             onUpdateApplication={handleUpdateApplication}
             onOpenDetail={setSelectedApplicationId}
+            onDelete={handleDeleteApplication} 
           />
         )}
 
@@ -212,6 +222,16 @@ export default function App() {
         </div>
       )}
 
+      {/* key = id: hapus lamaran lain saat toast masih tampil akan me-reset hitung mundur */}
+      {pendingDelete && (
+        <UndoToast
+          key={pendingDelete.item.id}
+          title={pendingDelete.item.company}
+          expiresAt={pendingDelete.expiresAt}
+          onUndo={handleUndoDelete}
+        />
+      )}
+      
       {isManualFormOpen && (
         <div
           className="modal-backdrop"

@@ -6,3 +6,4 @@ export { default as PipelineView } from "./PipelineView";
 export { default as ApplicationDetail } from "./ApplicationDetail";
 export { default as InterviewPrepTimer } from "./InterviewPrepTimer";
 export { default as DashboardView } from "./DashboardView";
+export { default as UndoToast } from "./UndoToast";
