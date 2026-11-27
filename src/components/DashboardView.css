@@ -174,4 +174,15 @@
   .comparator-grid {
     grid-template-columns: 1fr;
   }
+
+  /* untuk dropdown offer bertumpuk ke bawah di layar kecil */
+  .comparator-selects {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .comparator-selects .catalog-select {
+    width: 100%;
+  }
 }
