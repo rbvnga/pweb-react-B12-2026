@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./PipelineView.css";
 import type { Application, ApplicationStatus } from "../types";
 import { calculateSkillMatch, getMatchBadgeTier } from "../utils/skillMatch";
@@ -43,7 +43,6 @@ interface PipelineViewProps {
   onDelete?: (id: string) => void;
 }
 
-
 /** Ubah "YYYY-MM-DDTHH:mm" jadi angka ms. Kalau kosong/invalid -> Infinity
  *  supaya lamaran tanpa jadwal otomatis jatuh ke urutan paling bawah. */
 function interviewTimeOrInfinity(app: Application): number {
@@ -68,7 +67,6 @@ function formatRupiah(value: number): string {
   return `Rp ${value.toLocaleString("id-ID")}`;
 }
 
-
 // KOMPONEN UTAMA
 export default function PipelineView({
   applications,
@@ -89,6 +87,26 @@ export default function PipelineView({
   // Debounce 400ms memakai custom hook buatan sendiri, sama seperti di
   // Eksplorasi Lowongan, supaya list tidak di-filter di setiap ketikan.
   const debouncedSearch = useDebounce(searchText, 400);
+
+  /* ---- BONUS: SHORTCUT "/" UNTUK FOKUS KE KOLOM PENCARIAN ----
+   * useRef menyimpan referensi ke elemen <input> tanpa memicu re-render.
+   * useEffect memasang listener keydown di window; return-nya (cleanup)
+   * melepas listener saat komponen unmount, supaya tidak menumpuk. */
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      const isTyping =
+        tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+      if (e.key === "/" && !isTyping) {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   /* ---- DERIVED STATE: BANNER BENTROK ----
    * PENTING (Testcase 7): yang dikirim ke detectInterviewConflicts adalah
@@ -203,9 +221,10 @@ export default function PipelineView({
       {/* Toolbar filter gabungan */}
       <div className="pipeline-toolbar">
         <input
+          ref={searchRef}
           type="text"
           className="catalog-search-input pipeline-search"
-          placeholder="Cari perusahaan atau posisi..."
+          placeholder="Cari perusahaan atau posisi... (tekan /)"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />

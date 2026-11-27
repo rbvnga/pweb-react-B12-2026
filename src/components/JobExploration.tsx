@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { Application, JobDataSource, JobListing } from "../types";
 import { useDebounce } from "../hooks/useDebounce";
 import { fetchJobListings } from "../services/jobService";
@@ -36,6 +36,26 @@ export default function JobExploration({
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Semua Kategori");
   const [sortBy, setSortBy] = useState<SortOption>("match_desc");
+
+  /* ---- BONUS: SHORTCUT "/" UNTUK FOKUS KE KOLOM PENCARIAN ----
+   * useRef menyimpan referensi ke elemen <input> tanpa memicu re-render.
+   * useEffect memasang listener keydown di window; fungsi cleanup-nya
+   * melepas listener saat komponen unmount agar tidak menumpuk. */
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      const isTyping =
+        tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+      if (e.key === "/" && !isTyping) {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -142,11 +162,12 @@ export default function JobExploration({
         <div className="catalog-toolbar">
           <div className="search-box-wrap">
             <input
+              ref={searchRef}
               type="text"
               className="catalog-search-input"
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
-              placeholder="Cari posisi atau perusahaan..."
+              placeholder="Cari posisi atau perusahaan... (tekan /)"
             />
           </div>
 
